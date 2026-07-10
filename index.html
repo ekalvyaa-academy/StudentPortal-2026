@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Eklavyaa Academy — Empowering Minds. Shaping Futures.</title>
+<meta name="description" content="Eklavyaa Academy blends disciplined focus, modern knowledge and mentorship to help students aim for their goals and achieve excellence.">
+
+<link rel="icon" href="https://raw.githubusercontent.com/rushikesheklavyaa/StudentPortal-2026/main/logo.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Inter:wght@400;500;600&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+  /* ---------------------------------------------------------------
+     TOKENS
+     Palette read from the academy's own crest: deep navy shield,
+     brass/gold bowstring, and a warm paper tone standing in for the
+     open book's pages — not a stock "AI landing page" cream+terracotta.
+  --------------------------------------------------------------- */
+  :root {
+    --navy-deep:   #0E2049;
+    --navy:        #16306B;
+    --blue:        #2A52A6;
+    --gold:        #B6902E;
+    --gold-soft:   #D9B65C;
+    --gold-pale:   #F1E2B8;
+    --paper:       #FAF6EC;
+    --paper-dim:   #F3ECDB;
+    --white:       #FFFFFF;
+    --ink:         #1A2338;
+    --ink-soft:    #4B5468;
+    --ink-faint:   #8890A0;
+    --border:      #E6DFCB;
+    --border-dark: rgba(255,255,255,0.14);
+
+    --display: 'Fraunces', serif;
+    --body: 'Inter', sans-serif;
+    --ui: 'Poppins', sans-serif;
+
+    --container: 1180px;
+    --radius: 18px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    * { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; scroll-behavior: auto !important; }
+  }
+
+  body {
+    font-family: var(--body);
+    color: var(--ink);
+    background: var(--paper);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  img { max-width: 100%; display: block; }
+
+  a { color: inherit; text-decoration: none; }
+
+  .wrap {
+    max-width: var(--container);
+    margin: 0 auto;
+    padding: 0 32px;
+  }
+
+  .eyebrow {
+    font-family: var(--ui);
+    font-weight: 700;
+    font-size: 12.5px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+
+  h1, h2, h3 {
+    font-family: var(--display);
+    color: var(--navy-deep);
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+
+  :focus-visible {
+    outline: 2.5px solid var(--blue);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  /* ---------------------------------------------------------------
+     BUTTONS
+  --------------------------------------------------------------- */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    font-family: var(--ui);
+    font-weight: 600;
+    font-size: 15px;
+    padding: 15px 30px;
+    border-radius: 999px;
+    cursor: pointer;
+    border: 1.5px solid transparent;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+    white-space: nowrap;
+  }
+  .btn:hover { transform: translateY(-2px); }
+
+  .btn-solid {
+    background: linear-gradient(135deg, var(--blue), var(--navy));
+    color: #fff;
+    box-shadow: 0 10px 26px rgba(22, 48, 107, 0.35);
+  }
+  .btn-solid:hover { box-shadow: 0 14px 32px rgba(22, 48, 107, 0.42); }
+
+  .btn-outline {
+    border-color: rgba(255,255,255,0.55);
+    color: #fff;
+    background: rgba(255,255,255,0.06);
+  }
+  .btn-outline:hover { background: rgba(255,255,255,0.14); border-color: #fff; }
+
+  .btn-outline.on-light {
+    border-color: var(--navy);
+    color: var(--navy);
+    background: transparent;
+  }
+  .btn-outline.on-light:hover { background: rgba(22,48,107,0.06); }
+
+  .btn-gold {
+    background: linear-gradient(135deg, var(--gold-soft), var(--gold));
+    color: var(--navy-deep);
+    box-shadow: 0 10px 26px rgba(182, 144, 46, 0.35);
+  }
+
+  /* ---------------------------------------------------------------
+     NAV
+  --------------------------------------------------------------- */
+  header.site-nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(250, 246, 236, 0.88);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 32px;
+  }
+
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-family: var(--ui);
+    font-weight: 700;
+    font-size: 17px;
+    color: var(--navy-deep);
+  }
+  .brand img { width: 40px; height: 40px; border-radius: 9px; }
+  .brand small {
+    display: block;
+    font-family: var(--body);
+    font-weight: 500;
+    font-size: 10.5px;
+    letter-spacing: 0.14em;
+    color: var(--gold);
+    margin-top: 1px;
+  }
+
+  nav.links {
+    display: flex;
+    align-items: center;
+    gap: 34px;
+    font-family: var(--ui);
+    font-weight: 500;
+    font-size: 14.5px;
+    color: var(--ink-soft);
+  }
+  nav.links a { margin-right: 34px; }
+  nav.links a:last-child { margin-right: 0; }
+  nav.links a:hover { color: var(--navy); }
+  nav.links a.staff-link {
+    font-size: 12.5px;
+    color: var(--ink-faint);
+    padding-left: 18px;
+    border-left: 1px solid var(--border);
+  }
+  nav.links a.staff-link:hover { color: var(--navy); }
+
+  .nav-ctas { display: flex; align-items: center; gap: 12px; }
+  .nav-ctas .btn { padding: 11px 22px; font-size: 13.5px; }
+  .nav-ctas .btn-solid { background: linear-gradient(135deg, var(--blue), var(--navy)); box-shadow: none; }
+  .nav-ctas .btn-outline.on-light { border-color: var(--navy); color: var(--navy); }
+
+  .nav-toggle { display: none; }
+
+  @media (max-width: 900px) {
+    nav.links { display: none; }
+    .nav-ctas .btn-outline { display: none; }
+  }
+
+  /* ---------------------------------------------------------------
+     HERO
+  --------------------------------------------------------------- */
+  .hero {
+    position: relative;
+    background: radial-gradient(120% 140% at 15% 0%, #1B3A7C 0%, var(--navy) 42%, var(--navy-deep) 100%);
+    color: #fff;
+    overflow: hidden;
+    padding: 96px 0 130px;
+  }
+
+  .hero .wrap {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 56px;
+    align-items: center;
+  }
+
+  .hero-eyebrow {
+    font-family: var(--ui);
+    font-weight: 700;
+    font-size: 12.5px;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: var(--gold-soft);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 26px;
+  }
+  .hero-eyebrow::before {
+    content: '';
+    width: 34px; height: 1.5px;
+    background: var(--gold-soft);
+  }
+
+  .hero h1 {
+    color: #fff;
+    font-size: clamp(38px, 5vw, 60px);
+    line-height: 1.06;
+    margin-bottom: 22px;
+  }
+  .hero h1 em {
+    font-style: italic;
+    color: var(--gold-soft);
+  }
+
+  .hero p.sub {
+    font-size: 17.5px;
+    color: rgba(255,255,255,0.82);
+    max-width: 480px;
+    margin-bottom: 38px;
+  }
+
+  .hero-ctas { display: flex; gap: 16px; flex-wrap: wrap; }
+
+  .hero-art {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Signature element: an original line-art emblem echoing the crest's
+     own vocabulary — drawn bow, released arrow, open book, wing — used
+     as supporting art, not a redrawing of the academy's actual logo. */
+  .hero-art svg { width: 100%; max-width: 420px; height: auto; }
+
+  .hero-scroll-cue {
+    position: absolute;
+    bottom: 28px;
+    left: 32px;
+    z-index: 2;
+    font-family: var(--ui);
+    font-size: 11.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.55);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .hero-scroll-cue .line { width: 26px; height: 1px; background: rgba(255,255,255,0.4); animation: pulseline 2.4s ease-in-out infinite; }
+  @keyframes pulseline { 0%,100% { transform: scaleX(1); opacity: 0.4; } 50% { transform: scaleX(1.6); opacity: 0.9; } }
+
+  @media (max-width: 900px) {
+    .hero .wrap { grid-template-columns: 1fr; text-align: left; }
+    .hero-art { order: -1; max-width: 260px; margin: 0 auto 20px; }
+    .hero { padding: 56px 0 90px; }
+  }
+
+  /* ---------------------------------------------------------------
+     THE FLIGHT PATH — connective SVG arc running behind the four
+     pillars, drawn in as the section scrolls into view. It carries
+     real meaning here: this *is* the arrow's flight from aim to
+     target, not a decorative squiggle.
+  --------------------------------------------------------------- */
+  .flightpath-wrap {
+    position: relative;
+    background: var(--paper);
+  }
+
+  .flightpath-svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+  }
+  .flightpath-svg path {
+    fill: none;
+    stroke: var(--gold);
+    stroke-width: 2;
+    stroke-dasharray: 10 9;
+    stroke-linecap: round;
+    opacity: 0.55;
+  }
+  .flightpath-svg path.progress {
+    stroke: var(--gold);
+    opacity: 1;
+  }
+  .flightpath-svg path.progress.pre {
+    stroke-dasharray: 3200;
+    stroke-dashoffset: 3200;
+    transition: stroke-dashoffset 1.8s cubic-bezier(.16,.84,.44,1);
+  }
+  .flightpath-svg path.progress.pre.drawn { stroke-dashoffset: 0; }
+
+  @media (max-width: 680px) {
+    .flightpath-svg { display: none; }
+  }
+
+  /* ---------------------------------------------------------------
+     SECTION SCAFFOLDING
+  --------------------------------------------------------------- */
+  section { position: relative; padding: 108px 0; }
+  .section-head { max-width: 640px; margin-bottom: 56px; }
+  .section-head h2 { font-size: clamp(28px, 3.4vw, 40px); margin-top: 12px; }
+  .section-head p { color: var(--ink-soft); font-size: 16.5px; margin-top: 14px; }
+
+  .reveal { opacity: 1; transform: none; transition: opacity 0.7s ease, transform 0.7s ease; }
+  .reveal.pre { opacity: 0; transform: translateY(22px); }
+  .reveal.in { opacity: 1; transform: none; }
+
+  /* ---------------------------------------------------------------
+     PILLARS
+  --------------------------------------------------------------- */
+  .pillars-grid {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 26px;
+  }
+
+  .pillar-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 32px 26px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  }
+  .pillar-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 40px rgba(22,48,107,0.10);
+    border-color: var(--gold-pale);
+  }
+
+  .pillar-mark {
+    width: 46px; height: 46px;
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    background: linear-gradient(135deg, var(--gold-pale), var(--gold-soft));
+    color: var(--navy-deep);
+    margin-bottom: 20px;
+  }
+  .pillar-mark svg { width: 22px; height: 22px; }
+
+  .pillar-step {
+    font-family: var(--ui);
+    font-weight: 700;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: 6px;
+  }
+
+  .pillar-card h3 { font-size: 19px; color: var(--navy-deep); margin-bottom: 10px; }
+  .pillar-card p { color: var(--ink-soft); font-size: 14.5px; }
+
+  @media (max-width: 980px) {
+    .pillars-grid { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 620px) {
+    .pillars-grid { grid-template-columns: 1fr; }
+  }
+
+  /* ---------------------------------------------------------------
+     ABOUT — "The Eklavyaa Advantage"
+  --------------------------------------------------------------- */
+  .about {
+    background: var(--navy-deep);
+    color: #fff;
+  }
+  .about .wrap {
+    display: grid;
+    grid-template-columns: 0.85fr 1.15fr;
+    gap: 64px;
+    align-items: center;
+  }
+  .about .eyebrow { color: var(--gold-soft); }
+  .about h2 { color: #fff; font-size: clamp(28px, 3.6vw, 42px); margin: 14px 0 22px; }
+  .about p { color: rgba(255,255,255,0.78); font-size: 16.5px; max-width: 480px; }
+
+  .about-emblem { display: flex; justify-content: center; }
+  .about-emblem svg { width: 100%; max-width: 300px; }
+
+  @media (max-width: 900px) {
+    .about .wrap { grid-template-columns: 1fr; text-align: left; }
+    .about-emblem { order: -1; max-width: 220px; margin: 0 auto 12px; }
+  }
+
+  /* ---------------------------------------------------------------
+     PROGRAMS
+  --------------------------------------------------------------- */
+  .programs-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
+  }
+  .program-card {
+    padding: 38px 30px;
+    border-radius: var(--radius);
+    background: var(--white);
+    border: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+  }
+  .program-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--gold), var(--blue));
+  }
+  .program-tag {
+    font-family: var(--ui);
+    font-size: 11.5px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--blue);
+    margin-bottom: 14px;
+    display: inline-block;
+  }
+  .program-card h3 { font-size: 20.5px; margin-bottom: 12px; color: var(--navy-deep); }
+  .program-card p { color: var(--ink-soft); font-size: 15px; }
+
+  @media (max-width: 900px) { .programs-grid { grid-template-columns: 1fr; } }
+
+  /* ---------------------------------------------------------------
+     TESTIMONIALS
+  --------------------------------------------------------------- */
+  .testimonials { background: var(--paper-dim); }
+  .testimonial-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+  }
+  .testimonial-card {
+    background: var(--white);
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    padding: 38px;
+    position: relative;
+  }
+  .testimonial-card .mark {
+    font-family: var(--display);
+    font-size: 64px;
+    color: var(--gold-pale);
+    line-height: 0.5;
+    position: absolute;
+    top: 34px;
+    left: 30px;
+  }
+  .testimonial-card blockquote {
+    font-family: var(--display);
+    font-size: 19.5px;
+    font-style: italic;
+    color: var(--navy-deep);
+    line-height: 1.5;
+    margin: 26px 0 22px;
+    padding-left: 6px;
+  }
+  .testimonial-who {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-family: var(--ui);
+  }
+  .testimonial-avatar {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--blue), var(--navy));
+    color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 14px;
+    flex-shrink: 0;
+  }
+  .testimonial-name { font-weight: 700; font-size: 14px; color: var(--navy-deep); }
+  .testimonial-role { font-size: 12.5px; color: var(--ink-faint); }
+
+  @media (max-width: 800px) { .testimonial-grid { grid-template-columns: 1fr; } }
+
+  /* ---------------------------------------------------------------
+     FINAL CTA
+  --------------------------------------------------------------- */
+  .final-cta {
+    background: linear-gradient(135deg, var(--navy) 0%, var(--navy-deep) 100%);
+    color: #fff;
+    text-align: center;
+    padding: 110px 0;
+    position: relative;
+    overflow: hidden;
+  }
+  .final-cta .wrap { position: relative; z-index: 2; }
+  .target-mark { margin: 0 auto 28px; width: 62px; height: 62px; }
+  .final-cta h2 { color: #fff; font-size: clamp(28px, 4vw, 44px); margin-bottom: 16px; }
+  .final-cta p { color: rgba(255,255,255,0.78); font-size: 16.5px; margin-bottom: 34px; }
+  .final-cta .btn { font-size: 16px; padding: 17px 38px; }
+
+  /* ---------------------------------------------------------------
+     FOOTER
+  --------------------------------------------------------------- */
+  footer {
+    background: var(--navy-deep);
+    color: rgba(255,255,255,0.62);
+    padding: 56px 0 30px;
+    border-top: 1px solid var(--border-dark);
+  }
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr;
+    gap: 40px;
+    padding-bottom: 40px;
+    border-bottom: 1px solid var(--border-dark);
+  }
+  .footer-brand { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
+  .footer-brand img { width: 38px; height: 38px; border-radius: 9px; }
+  .footer-brand span { font-family: var(--ui); font-weight: 700; color: #fff; font-size: 16px; }
+  .footer-col h4 {
+    font-family: var(--ui);
+    font-size: 12.5px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gold-soft);
+    margin-bottom: 16px;
+    font-weight: 700;
+  }
+  .footer-col a, .footer-col p { display: block; font-size: 14px; margin-bottom: 10px; color: rgba(255,255,255,0.62); }
+  .footer-col a:hover { color: #fff; }
+  .footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding-top: 26px;
+    font-size: 13px;
+  }
+
+  @media (max-width: 800px) {
+    .footer-grid { grid-template-columns: 1fr; }
+  }
+
+</style>
+</head>
+<body>
+
+<!-- ================= NAV ================= -->
+<header class="site-nav">
+  <div class="nav-inner">
+    <a class="brand" href="#top">
+      <img src="https://raw.githubusercontent.com/rushikesheklavyaa/StudentPortal-2026/main/logo.jpg" alt="Eklavyaa Academy crest">
+      <span>Eklavyaa Academy<small>AIM &middot; LEARN &middot; ACHIEVE</small></span>
+    </a>
+    <nav class="links">
+      <a href="#pillars">Foundation</a>
+      <a href="#about">About</a>
+      <a href="#programs">Programs</a>
+      <a href="#testimonials">Community</a>
+      <a href="teacher-login.html" class="staff-link">Teacher / Admin Login</a>
+    </nav>
+    <div class="nav-ctas">
+      <a class="btn btn-outline on-light" href="student.html">Portal Login</a>
+      <a class="btn btn-solid" href="#programs">Explore Programs</a>
+    </div>
+  </div>
+</header>
+
+<!-- ================= HERO ================= -->
+<section class="hero" id="top">
+  <div class="wrap">
+    <div class="hero-copy reveal in">
+      <div class="hero-eyebrow">Eklavyaa Academy</div>
+      <h1>Empowering Minds.<br>Shaping <em>Futures</em>.</h1>
+      <p class="sub">Welcome to Eklavyaa Academy, where we blend disciplined focus, modern knowledge and mentorship to help students target their goals and achieve excellence.</p>
+      <div class="hero-ctas">
+        <a class="btn btn-gold" href="#programs">Explore Our Programs</a>
+        <a class="btn btn-outline" href="student.html">Portal Login</a>
+      </div>
+    </div>
+    <div class="hero-art" aria-hidden="true">
+      <!-- Original line-art emblem in the crest's own vocabulary: a
+           drawn bow, a released arrow, an open book, a wing. -->
+      <svg viewBox="0 0 420 420" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="210" cy="210" r="188" stroke="#D9B65C" stroke-opacity="0.25" stroke-width="1.5" stroke-dasharray="3 9"/>
+        <path d="M120 70 C 60 140, 60 280, 120 350" stroke="#D9B65C" stroke-width="3" stroke-linecap="round"/>
+        <path d="M120 70 L 300 210 L 120 350" stroke="#D9B65C" stroke-width="1.5" stroke-opacity="0.55"/>
+        <line x1="120" y1="210" x2="330" y2="210" stroke="#F1E2B8" stroke-width="3.5" stroke-linecap="round"/>
+        <path d="M330 210 L 305 198 M330 210 L 305 222" stroke="#F1E2B8" stroke-width="3.5" stroke-linecap="round"/>
+        <g transform="translate(150,236)">
+          <path d="M0 40 H110 V16 C110 7 103 0 94 0 H16 C7 0 0 7 0 16 V40Z" stroke="#FAF6EC" stroke-width="2.5"/>
+          <path d="M55 0 V40" stroke="#FAF6EC" stroke-width="2"/>
+          <path d="M8 10 H45 M8 20 H45 M8 30 H50" stroke="#FAF6EC" stroke-opacity="0.5" stroke-width="1.5"/>
+          <path d="M65 10 H102 M65 20 H102 M60 30 H102" stroke="#FAF6EC" stroke-opacity="0.5" stroke-width="1.5"/>
+        </g>
+        <path d="M175 236 C 160 200, 150 165, 205 148 C 260 165, 250 200, 235 236" stroke="#D9B65C" stroke-width="2" stroke-opacity="0.7"/>
+      </svg>
+    </div>
+  </div>
+  <div class="hero-scroll-cue"><span class="line"></span>Scroll to see how it lands</div>
+</section>
+
+<!-- ================= PILLARS (the arrow's flight path) ================= -->
+<div class="flightpath-wrap">
+  <svg class="flightpath-svg" id="flightSvg" viewBox="0 0 1180 620" preserveAspectRatio="none">
+    <path d="M60 60 C 400 40, 780 40, 1120 60 C 1160 300, 1160 340, 1120 560 C 780 580, 400 580, 60 560"/>
+    <path class="progress" id="flightProgress" d="M60 60 C 400 40, 780 40, 1120 60 C 1160 300, 1160 340, 1120 560 C 780 580, 400 580, 60 560"/>
+  </svg>
+
+  <section id="pillars">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div class="eyebrow">Our Foundation for Success</div>
+        <h2>Four principles, one flight path</h2>
+        <p>Like an arrow loosed from a steady bow, a student's progress isn't random — it follows a disciplined line from aim to impact. Here's ours.</p>
+      </div>
+
+      <div class="pillars-grid">
+        <div class="pillar-card reveal">
+          <div class="pillar-mark">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4l16 16M20 4l-8 8M4 20l4-4"/></svg>
+          </div>
+          <div class="pillar-step">Draw the bow</div>
+          <h3>Focus &amp; Knowledge</h3>
+          <p>We cultivate a deep respect for learning, providing students with a robust academic curriculum and the sharp focus needed to master their subjects.</p>
+        </div>
+
+        <div class="pillar-card reveal">
+          <div class="pillar-mark">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v6M12 21v-6M4 12h6M14 12h6"/></svg>
+          </div>
+          <div class="pillar-step">Steady the aim</div>
+          <h3>Mentorship &amp; Guidance</h3>
+          <p>Education isn't a solitary journey. Our dedicated faculty guides every student step by step, unlocking doors to new opportunities.</p>
+        </div>
+
+        <div class="pillar-card reveal">
+          <div class="pillar-mark">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l2.5 6.5L21 10l-5 4.5L17.5 21 12 17l-5.5 4L8 14.5 3 10l6.5-1.5z"/></svg>
+          </div>
+          <div class="pillar-step">Hold the line</div>
+          <h3>Determination &amp; Persistence</h3>
+          <p>We instill the resilience required to overcome challenges, teaching students that effort and consistency are the keys to unlocking any door.</p>
+        </div>
+
+        <div class="pillar-card reveal">
+          <div class="pillar-mark">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3 7h7l-5.5 4.5L18.5 21 12 16.5 5.5 21l2-7.5L2 9h7z"/></svg>
+          </div>
+          <div class="pillar-step">Land the shot</div>
+          <h3>Achievement &amp; Legacy</h3>
+          <p>We celebrate growth and success, preparing our students to build a lasting legacy of excellence in their chosen fields.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ================= ABOUT ================= -->
+<section class="about" id="about">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="eyebrow">The Eklavyaa Advantage</div>
+      <h2>Named for focus itself</h2>
+      <p>Inspired by the legendary focus and dedication of Eklavya, Eklavyaa Academy is committed to providing a holistic educational experience. We believe every student possesses unique potential. By combining traditional academic values with modern learning tools — including our dedicated digital portals — we ensure our students are equipped to aim high, learn deeply, and achieve their dreams.</p>
+    </div>
+    <div class="about-emblem reveal">
+      <svg viewBox="0 0 300 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="150" cy="150" r="110" stroke="#B6902E" stroke-width="1.5" stroke-opacity="0.5"/>
+        <circle cx="150" cy="150" r="78" stroke="#D9B65C" stroke-width="1.5" stroke-opacity="0.6"/>
+        <circle cx="150" cy="150" r="46" stroke="#F1E2B8" stroke-width="1.5" stroke-opacity="0.8"/>
+        <circle cx="150" cy="150" r="8" fill="#D9B65C"/>
+        <path d="M150 150 L 40 60" stroke="#F1E2B8" stroke-width="2.5" stroke-linecap="round"/>
+        <path d="M40 60 L 58 64 M40 60 L 48 76" stroke="#F1E2B8" stroke-width="2.5" stroke-linecap="round"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PROGRAMS ================= -->
+<section id="programs">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">What We Offer</div>
+      <h2>Programs built around your target</h2>
+      <p>Whichever stage a student is aiming from, there's a program shaped for the distance ahead.</p>
+    </div>
+    <div class="programs-grid">
+      <div class="program-card reveal">
+        <span class="program-tag">Foundation</span>
+        <h3>Primary &amp; Secondary Education</h3>
+        <p>Building a rock-solid foundation in core academic disciplines, so every later subject stands on solid ground.</p>
+      </div>
+      <div class="program-card reveal">
+        <span class="program-tag">Focus</span>
+        <h3>Competitive Exam Prep</h3>
+        <p>Specialized, focused coaching designed to help students aim precisely and ace their target examinations.</p>
+      </div>
+      <div class="program-card reveal">
+        <span class="program-tag">Beyond the Classroom</span>
+        <h3>Skill Development</h3>
+        <p>Beyond textbooks — fostering critical thinking, leadership, and digital literacy for the world students are entering.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= TESTIMONIALS ================= -->
+<section class="testimonials" id="testimonials">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">What Our Community Says</div>
+      <h2>Told by the people who'd know</h2>
+    </div>
+    <div class="testimonial-grid">
+      <div class="testimonial-card reveal">
+        <div class="mark">&ldquo;</div>
+        <blockquote>The disciplined environment and constant mentorship at Eklavyaa Academy completely transformed the way I approach my studies.</blockquote>
+        <div class="testimonial-who">
+          <div class="testimonial-avatar">AR</div>
+          <div>
+            <div class="testimonial-name">Ananya R.</div>
+            <div class="testimonial-role">Alumna</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card reveal">
+        <div class="mark">&ldquo;</div>
+        <blockquote>As parents, we appreciate the transparency and the continuous tracking of our child's progress through the academy's portal.</blockquote>
+        <div class="testimonial-who">
+          <div class="testimonial-avatar">RK</div>
+          <div>
+            <div class="testimonial-name">Rajesh K.</div>
+            <div class="testimonial-role">Parent</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FINAL CTA ================= -->
+<section class="final-cta">
+  <div class="wrap">
+    <svg class="target-mark reveal" viewBox="0 0 64 64" fill="none">
+      <circle cx="32" cy="32" r="28" stroke="#D9B65C" stroke-width="2"/>
+      <circle cx="32" cy="32" r="18" stroke="#D9B65C" stroke-width="2"/>
+      <circle cx="32" cy="32" r="6" fill="#D9B65C"/>
+    </svg>
+    <h2 class="reveal">Ready to Aim for Excellence?</h2>
+    <p class="reveal">Admissions are currently open for the upcoming academic session. Secure your spot today.</p>
+    <a class="btn btn-gold reveal" href="#contact">Apply Now / Inquire Today</a>
+  </div>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer id="contact">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand">
+          <img src="https://raw.githubusercontent.com/rushikesheklavyaa/StudentPortal-2026/main/logo.jpg" alt="Eklavyaa Academy crest">
+          <span>Eklavyaa Academy</span>
+        </div>
+        <p style="max-width:320px;">Disciplined focus, modern knowledge, and mentorship — helping students aim, learn and achieve.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Explore</h4>
+        <a href="#pillars">Our Foundation</a>
+        <a href="#about">About the Academy</a>
+        <a href="#programs">Programs</a>
+        <a href="student.html">Portal Login</a>
+        <a href="teacher-login.html">Teacher / Admin Login</a>
+      </div>
+      <div class="footer-col">
+        <h4>Get in Touch</h4>
+        <p>Pune, Maharashtra, India</p>
+        <a href="tel:+919000000000">+91 90000 00000</a>
+        <a href="mailto:info@eklavyaaacademy.com">info@eklavyaaacademy.com</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; <span id="year"></span> Eklavyaa Academy. All rights reserved.</span>
+      <span>Aim. Learn. Achieve.</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  (function () {
+    var yearEl = document.getElementById('year');
+    if (yearEl) { yearEl.textContent = new Date().getFullYear(); }
+
+    // Progressive enhancement: elements are visible by default (see
+    // .reveal in CSS). Only if IntersectionObserver exists AND setup
+    // succeeds do we opt them into a hidden-then-fade-in state — so a
+    // script error or an old engine just leaves everything visible,
+    // rather than risking permanently-invisible content.
+    try {
+      if ('IntersectionObserver' in window) {
+        var revealEls = document.querySelectorAll('.reveal');
+        for (var i = 0; i < revealEls.length; i++) { revealEls[i].className += ' pre'; }
+
+        var io = new IntersectionObserver(function (entries) {
+          for (var j = 0; j < entries.length; j++) {
+            if (entries[j].isIntersecting) {
+              entries[j].target.className += ' in';
+              io.unobserve(entries[j].target);
+            }
+          }
+        }, { threshold: 0.15 });
+        for (var k = 0; k < revealEls.length; k++) { io.observe(revealEls[k]); }
+
+        // Belt-and-suspenders: guarantee visibility no matter what.
+        setTimeout(function () {
+          for (var m = 0; m < revealEls.length; m++) { revealEls[m].className += ' in'; }
+        }, 2500);
+      }
+    } catch (err) {
+      // Leave everything at its default visible state.
+    }
+
+    // Draw the flight-path arc once the pillars section scrolls into
+    // view — the one orchestrated motion moment on the page, tied
+    // directly to the brand's own bow-and-arrow story. Undrawn state
+    // only applies once JS confirms it can also draw it back in.
+    try {
+      var flightProgress = document.getElementById('flightProgress');
+      var flightWrap = document.querySelector('.flightpath-wrap');
+      if (flightProgress && flightWrap && 'IntersectionObserver' in window) {
+        flightProgress.className += ' pre';
+        var flightIO = new IntersectionObserver(function (entries) {
+          for (var i = 0; i < entries.length; i++) {
+            if (entries[i].isIntersecting) {
+              flightProgress.className += ' drawn';
+              flightIO.unobserve(entries[i].target);
+            }
+          }
+        }, { threshold: 0.2 });
+        flightIO.observe(flightWrap);
+        setTimeout(function () { flightProgress.className += ' drawn'; }, 2500);
+      }
+    } catch (err) {
+      // Leave the arc at its default fully-visible state.
+    }
+  })();
+</script>
+
+</body>
+</html>
